@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="path/to/FileSaver.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.2/FileSaver.min.js"></script>
+    <!-- Include the TableExport library (CDN) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tableexport/5.3.2/tableexport.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.2.1/exceljs.min.js"></script>
+
+
+
+    <style>
+        body{
+            background-color: hwb(36 97% 1%);
+         margin-bottom: 20px;
+        }
+        #responsive{
+            margin-right: 10%;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        #input-form{
+            width: 60%;
+            border-width: 3px;
+        border-color: black;
+            margin-left: 20%;
+        }
+       
+        #addbtn{
+        background:linear-gradient(to left top, rgb(16, 185, 129), rgb(101, 163, 13));
+        color: white;
+        font-size: 20px;
+        border-radius: 50px;
+        font-weight: bold;
+        height: 50px;
+        width: 80px;
+        margin-left: 50%;
+            margin-top: 10px;
+            margin-bottom: 10px;
+       }
+       #addbtn:hover{
+        cursor: pointer;
+       }
+       #registrationTable{
+        width: 40%;
+        margin-left: 30%;
+        border-width: 3px;
+        border-color: black;
+       }
+       #exportToExcelButton{
+        margin-left: 50%;
+        margin-top: 10px;
+       }
+       label{
+        font-weight: BOLD;
+       }
+       input{
+        border-radius: 20px;
+       }
+       
+    @media screen and (max-width: 428px) {
+        /* Điều chỉnh CSS cho màn hình iPhone 13 Pro Max (khoảng 428px chiều rộng) */
+        #responsive {
+            margin-right: 0;
+        }
+
+        #input-form {
+            width: 100%;
+            margin-left: 0;
+        }
+
+        #registrationTable {
+            width: 80%;
+            margin-left: 10%;
+        }
+    }
+    </style>
+</head>
+<body>
+    
+    <div id="responsive">
+        <div id="content1">
+    <h1 style="font-style: italic;margin-left: 30%;">Deal Registration Form</h1>
+    <table id="input-form">
+        <tr>
+            <th style="background-color: grey;color: aliceblue;font-size: larger;">End User Information</th>
+            <th style="background-color: grey;color: aliceblue;font-size: larger;">Partner / Reseller Information</th>
+            <th style="background-color: grey;color: aliceblue;font-size: larger;">Remarks</th>
+            <th style="background-color: grey;color: aliceblue;font-size: larger;">Bill of Materials</th>
+        </tr>
+        <tr>
+            <td>
+                <label for="endUserCompanyName">End user Company Name (English name)*:</label><br>
+                <input type="text" id="endUserCompanyName" required><br>
+                <br>
+                <label for="endUserCompanyNameVietnamese">End user Company Name Vietnamese:</label><br>
+                <input type="text" id="endUserCompanyNameVietnamese"><br>
+                <br>
+                <label for="companyAddress">Company Address*:</label><br>
+                <input type="text" id="companyAddress" required><br><br>
+                <label for="projectName">Project Name*:</label><br>
+                <input type="text" id="projectName" required><br><br>
+                <label for="estimatedClosureMonth">Estimated Closure Month:</label><br>
+                <input type="text" id="estimatedClosureMonth"><br><br>
+                <label for="proposedPOCSchedule">Proposed POC Schedule:</label><br>
+                <input type="text" id="proposedPOCSchedule"><br><br>
+                <label for="endUserName">End User Name (First, Last Name):</label><br>
+                <input type="text" id="endUserName" required><br><br>
+                <label for="endUserEmail">End User Email*:</label><br>
+                <input type="email" id="endUserEmail" required><br><br>
+                <label for="endUserPhone">End User Phone:</label><br>
+                <input type="tel" id="endUserPhone"><br><br>
+                <label for="endUserWebsite">End User Website:</label><br>
+                <input type="url" id="endUserWebsite"><br><br>
+                <label for="existingKasperskyCustomer">Existing Kaspersky Customer?</label><br>
+                <input type="text" id="existingKasperskyCustomer"><br><br>
+                <label for="competition">Competition:</label><br>
+                <input type="text" id="competition"><br><br>
+            </td>
+            <td>
+                <label for="partnerCompanyName">Partner Company Name*:</label><br>
+                <input type="text" id="partnerCompanyName" required><br><br>
+                <label for="accountManagerName">Account Manager Name (First, Last Name):</label><br>
+                <input type="text" id="accountManagerName"><br><br>
+                <label for="accountManagerEmail">Account Manager Email:</label><br>
+                <input type="email" id="accountManagerEmail"><br><br>
+                <label for="accountManagerPhone">Account Manager Phone:</label><br>
+                <input type="tel" id="accountManagerPhone"><br><br>
+            </td>
+            <td>
+                <label for="remarks">Remarks (Any comments/ details/ requirements/ project name / tender specifications and etc. For government bids, it's mandatory to indicate project name, procuring entity, project background/used case e.g. if one lot.):</label><br>
+                <textarea style="border-radius: 10px;" id="remarks" rows="4" cols="50"></textarea><br>
+            </td>
+            <td>
+                <label for="sku">SKU/ Product/ Description.*:</label><br>
+                <input type="text" id="sku" required><br><br>
+                <label for="quantity">Qty*:</label><br>
+                <input type="number" id="quantity" required><br><br>
+                <label for="listPriceUSD">List Price USD:</label><br>
+                <input type="number" id="listPriceUSD"><br><br><br>
+                <p>-------------------------</p>
+                <label for="sku2">SKU/ Product/ Description.*:</label><br>
+                <input type="text" id="sku2" ><br><br>
+                <label for="quantity">Qty*:</label><br>
+                <input type="number" id="quantity2" ><br><br>
+                <label for="listPriceUSD">List Price USD:</label><br>
+                <input type="number" id="listPriceUSD2"><br><br><br>
+                <p>-------------------------</p>
+                <label for="sku3">SKU/ Product/ Description.*:</label><br>
+                <input type="text" id="sku3" ><br><br>
+                <label for="quantity">Qty*:</label><br>
+                <input type="number" id="quantity3" ><br><br>
+                <label for="listPriceUSD">List Price USD:</label><br>
+                <input type="number" id="listPriceUSD3"><br><br>
+            </td>
+            
+        </tr>
+    </table>
+    <button id="addbtn" onclick="addDataToTable()">+</button>
+</div>
+   
+<div id="content2">
+    </table>
+
+    <table  id="registrationTable">
+        <tr>
+            <th colspan="5" style="background-color:rgb(251,229,213)">Deal Registration Form</th>
+        </tr>
+        <tr>
+            <td style="color: hsla(234, 89%, 24%, 0.835);font-weight: bold;width: fit-content;">End user Company Name*:(English name)</td>
+            <td id="dataB2"style="font-weight: bold;"></td>
+            <td style="color: hsla(234, 89%, 24%, 0.835);font-weight: bold;" colspan="2">End User Name (First, Last Name)</td>
+            <td id="dataE2"style="font-weight: bold;"></td>
+      
+        </tr>
+        <tr>
+            <td style="color: hsla(234, 89%, 24%, 0.835);font-weight: bold;">End user Company Name Vietnamese</td>
+            <td id="dataB3"style="font-weight: bold;"></td>
+            <td  style="color: hsla(234, 89%, 24%, 0.835);font-weight: bold;" colspan="2">End User Email*</td>
+            <td id="dataE3"style="font-weight: bold;"></td>
+    
+        </tr>
+        <tr>
+            <td style="color: hsla(234, 89%, 24%, 0.835);font-weight: bold;" rowspan="2">Company Address*</td>
+            <td rowspan="2" id="dataB4B5"style="font-weight: bold;"></td>
+            <td colspan="2" style="font-weight: bold;">End User Phone</td>
+            <td id="dataE4"style="font-weight: bold;"></td>
+            
+        </tr>
+        
+        <tr>
+            <td style="font-weight: bold;" colspan="2">End User Website</td>
+            <td id="dataE5"style="font-weight: bold;"></td>
+          
+        </tr>
+        <tr>
+            <td style="color: hsla(234, 89%, 24%, 0.835);font-weight: bold;">Project Name *</td>
+            <td id="dataB6"style="font-weight: bold;"></td>
+            <td  style="font-weight: bold;" colspan="2">Existing Kaspersky</td>
+            <td id="dataE6"style="font-weight: bold;"></td>
+          
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td colspan="2"></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td style="color: hsla(234, 89%, 24%, 0.835);font-weight: bold;">Estimated Closure Month*</td>
+            <td id="dataB8"style="font-weight: bold;"></td>
+            <td style="font-weight: bold;" colspan="2">Competition</td>
+            <td id="dataE8"style="font-weight: bold;"></td>
+          
+        </tr>
+        <tr>
+            <td style="font-weight: bold;">Proposed POC Schedule:</td>
+            <td id="dataB9"style="font-weight: bold;"></td>
+            <td colspan="2"></td>
+            <td id="dataE9"style="font-weight: bold;"></td>
+         
+        </tr>
+
+        <tr>
+            <th colspan="5" style="background-color:rgb(251,229,213)">Partner / Reseller Information				
+</th>
+        </tr>
+        <tr>
+            <td style="font-weight: bold;">Partner Company Name*:
+            </td>
+            <td  colspan="2" id="dataB11"style="font-weight: bold;"></td>
+            <td style="font-weight: bold;" >Account Manager Email*:
+            </td>
+            <td id="dataE11"style="font-weight: bold;"></td>
+            
+        <tr>
+            <td style="font-weight: bold;">"Account Manager Name*
+                (First, Last Name):"              </td>
+            <td  colspan="2" id="dataB12"style="font-weight: bold;"></td>
+            <td style="font-weight: bold;" >Account Manager Phone:
+            </td>
+            <td id="dataE12"style="font-weight: bold;"></td>
+            
+        </tr>
+        <tr>
+            <td style="font-weight: bold;background-color:rgb(251,229,213)" colspan="5">Remarks (Any comments/ details/ requirements/ project name / tender specifications and etc. For government bids, its mandatory to indicate project name, procuring entity, project background/used case e.g. if one lot.)				
+            </td>
+        </tr>
+        <tr>
+            <td   colspan="5" id="dataA14"style="font-weight: bold;"></td>
+     
+        </tr>
+        <tr>
+            <td style="font-weight: bold;background-color:rgb(251,229,213)"  colspan="5" >Bill of Materials				
+            </td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold;"  colspan="3" >SKU/ Product/ Description.*						
+            </td>
+            <td  style="font-weight: bold;" >Qty*					
+            </td>
+            <td  style="font-weight: bold;" >List Price USD					
+            </td>
+           
+        </tr>
+        <tr>
+            <td style="font-weight: bold"  colspan="3" id="dataA17"></td>
+            <td  style="font-weight: bold" id="dataD17"style="font-weight: bold;"></td>
+            <td style="font-weight: bold" id="dataE17"style="font-weight: bold;"></td>
+            
+        </tr>
+        <tr>
+            <td style="font-weight: bold" colspan="3" id="dataA18"></td>
+            <td   id="dataD18"style="font-weight: bold;"></td>
+            <td  id="dataE18"style="font-weight: bold;"></td>
+            
+        </tr>
+        <tr>
+            <td style="font-weight: bold" colspan="3" id="dataA19"></td>
+            <td   id="dataD19"style="font-weight: bold;"></td>
+            <td  id="dataE19"style="font-weight: bold;"></td>
+            
+        </tr>
+    </table>
+    <button style="background-color: #047a4d;color:white;font-weight: bold;width: 300px;height:50px;border-radius: 50px;cursor: pointer;" id="exportToExcelButton">DOAWLOAD NOW</button>
+    <a href="https://convertio.co/vn/xlsx-docx/" target="_blank"> <!-- Thay "https://example.com" bằng URL mà bạn muốn liên kết đến -->
+        <button style="background-color: #325C9A;color:white;font-weight: bold;width: 100px;height:50px;border-radius: 100px;cursor: pointer;"><i class="fa-solid fa-file-word fa-xl" style="color: #fcfcfc;"></i>  CHUYỂN EXCEL SANG WORD</button>
+    </a>
+</div>
+</div>
+    <script>
+        //
+        
+        //
+       function addDataToTable() {
+            const endUserCompanyName = document.getElementById("endUserCompanyName").value;
+            const endUserCompanyNameVietnamese = document.getElementById("endUserCompanyNameVietnamese").value;
+            const companyAddress = document.getElementById("companyAddress").value;
+            const projectName = document.getElementById("projectName").value;
+            const estimatedClosureMonth = document.getElementById("estimatedClosureMonth").value;
+            const proposedPOCSchedule = document.getElementById("proposedPOCSchedule").value;
+            const endUserName = document.getElementById("endUserName").value;
+            const endUserEmail = document.getElementById("endUserEmail").value;
+            const endUserPhone = document.getElementById("endUserPhone").value;
+            const endUserWebsite = document.getElementById("endUserWebsite").value;
+            const competition = document.getElementById("competition").value;
+            const existingKaspersky = document.getElementById("existingKasperskyCustomer").value;
+            const PartnerCompanyName = document.getElementById("partnerCompanyName").value;
+            const accountManagerEmail= document.getElementById("accountManagerEmail").value;
+            const accountManagerName=document.getElementById("accountManagerName").value;
+            const remarks=document.getElementById("remarks").value;
+
+            const sku=document.getElementById("sku").value;
+            const quantity=document.getElementById("quantity").value;
+            const listPriceUSD=document.getElementById("listPriceUSD").value;
+
+            const sku2=document.getElementById("sku2").value;
+            const quantity2=document.getElementById("quantity2").value;
+            const listPriceUSD2=document.getElementById("listPriceUSD2").value;
+
+            const sku3=document.getElementById("sku3").value;
+            const quantity3=document.getElementById("quantity3").value;
+            const listPriceUSD3=document.getElementById("listPriceUSD3").value;
+
+
+            document.getElementById("dataB2").textContent = endUserCompanyName;
+            document.getElementById("dataB3").textContent = endUserCompanyNameVietnamese;
+            document.getElementById("dataB4B5").textContent = companyAddress;
+            document.getElementById("dataB6").textContent = projectName;
+            document.getElementById("dataB8").textContent = estimatedClosureMonth;
+            document.getElementById("dataB9").textContent = proposedPOCSchedule;
+            document.getElementById("dataE2").textContent = endUserName;
+            document.getElementById("dataE3").textContent = endUserEmail;
+            document.getElementById("dataE4").textContent = endUserPhone;
+            document.getElementById("dataE5").textContent = endUserWebsite;
+            document.getElementById("dataE8").textContent = competition;
+            document.getElementById("dataE6").textContent = existingKaspersky;
+            document.getElementById("dataB11").textContent=PartnerCompanyName;
+            document.getElementById("dataE11").textContent=accountManagerEmail;
+            document.getElementById("dataB12").textContent=accountManagerName;
+            document.getElementById("dataA14").textContent=remarks;
+            document.getElementById("dataA17").textContent=sku;
+            document.getElementById("dataD17").textContent=quantity;
+            document.getElementById("dataE17").textContent=listPriceUSD;
+
+            document.getElementById("dataA18").textContent=sku2;
+            document.getElementById("dataD18").textContent=quantity2;
+            document.getElementById("dataE18").textContent=listPriceUSD2;
+
+            document.getElementById("dataA19").textContent=sku3;
+            document.getElementById("dataD19").textContent=quantity3;
+            document.getElementById("dataE19").textContent=listPriceUSD3;
+
+        }
+        var cells = document.querySelectorAll('#registrationTable td');
+
+// Add a click event listener to the table
+document.getElementById("registrationTable").addEventListener("click", function(event) {
+  cells.forEach(function(cell) {
+    cell.contentEditable = true;
+    cell.addEventListener('blur', function() {
+      cell.contentEditable = false;
+    });
+  });
+});
+
+
+// Function to insert a new row
+
+
+  
+  // Hàm này sẽ tạo một tệp Excel với cấu trúc đã mô tả
+function exportToExcel() {
+    var workbook = new ExcelJS.Workbook();
+    var worksheet = workbook.addWorksheet('Deal Registration Form');
+// thay đổi chiều dài cột
+worksheet.getColumn(1).width = 20; // Thay đổi chiều rộng của cột 1
+worksheet.getColumn(2).width = 40;
+worksheet.getColumn(3).width = 10;
+worksheet.getColumn(4).width = 20;// Thay đổi chiều cao của dòng 1
+worksheet.getColumn(5).width = 30;
+//thay đổi chiều cao hàng
+worksheet.getRow(2).height = 45;
+worksheet.getRow(3).height = 35;
+worksheet.getRow(8).height = 35;
+worksheet.getRow(9).height = 35;
+worksheet.getRow(11).height = 40;
+worksheet.getRow(12).height = 45;
+worksheet.getRow(14).height = 35;
+worksheet.getRow(15).height = 35;
+worksheet.getRow(16).height = 35;
+worksheet.getRow(17).height = 35; // Thay đổi chiều cao của dòng 1
+worksheet.getRow(18).height = 35; 
+worksheet.getRow(19).height = 35; 
+worksheet.columns.forEach(column => {
+    column.autoWidth = true;
+});
+
+
+    // Tạo các ô nối cell theo cấu trúc đã mô tả
+    worksheet.mergeCells('A1:E1');
+    worksheet.getCell('A1').value = 'Deal Registration Form';
+
+    // Bảng 1 - End User Information
+    worksheet.getCell('A2').value = 'End user Company Name*:(English name)';
+    worksheet.getCell('B2').value = document.getElementById('endUserCompanyName').value;
+    worksheet.mergeCells('C2:D2');
+    worksheet.getCell('C2').value = 'End User Name (First, Last Name)';
+    worksheet.getCell('E2').value = document.getElementById('endUserName').value;
+    worksheet.getCell('A3').value = 'End user Company Name Vietnamese';
+    worksheet.getCell('B3').value = document.getElementById('endUserCompanyNameVietnamese').value;
+    worksheet.mergeCells('C3:D3');
+    worksheet.getCell('C3').value = 'End User Email*';
+    worksheet.getCell('E3').value = document.getElementById('endUserEmail').value;
+    worksheet.mergeCells('A4:A5');
+    worksheet.getCell('A4').value = 'Company Address*';
+    worksheet.getCell('B4').value = document.getElementById('companyAddress').value;
+    worksheet.mergeCells('C4:D4');
+    worksheet.getCell('C4').value = 'End User Phone';
+    worksheet.getCell('E4').value = document.getElementById('endUserPhone').value;
+    worksheet.mergeCells('C5:D5');
+    worksheet.getCell('C5').value = 'End User Website';
+    worksheet.getCell('E5').value = document.getElementById('endUserWebsite').value;
+    worksheet.getCell('A6').value = 'Project Name *';
+    worksheet.getCell('B6').value = document.getElementById('projectName').value;
+    worksheet.mergeCells('C6:D6');
+    worksheet.getCell('C6').value = 'Existing Kaspersky';
+    worksheet.getCell('E6').value = document.getElementById('existingKasperskyCustomer').value;
+    worksheet.getCell('A8').value = 'Estimated Closure Month *';
+    worksheet.getCell('B8').value = document.getElementById('estimatedClosureMonth').value;
+    worksheet.mergeCells('C8:D8');
+    worksheet.getCell('C8').value = 'Competition';
+    worksheet.getCell('E8').value = document.getElementById('competition').value;
+    worksheet.getCell('A9').value = 'Proposed POC Schedule:';
+    worksheet.getCell('B9').value = document.getElementById('proposedPOCSchedule').value;
+    worksheet.mergeCells('C9:D9');
+    worksheet.getCell('E9').value = '';
+    worksheet.mergeCells('C7:D7');
+    worksheet.getCell('E7').value = '';
+    // Bảng 2 - Partner / Reseller Information
+    worksheet.mergeCells('A10:E10');
+    worksheet.getCell('A10').value = 'Partner / Reseller Information';
+    worksheet.getCell('A11').value = 'Partner Company Name*:';
+    worksheet.mergeCells('B11:C11');
+    worksheet.getCell('B11').value = document.getElementById('partnerCompanyName').value;
+    worksheet.getCell('D11').value = 'Account Manager Email*:';
+    worksheet.getCell('E11').value = document.getElementById('accountManagerEmail').value;
+    worksheet.mergeCells('B12:C12');
+    worksheet.getCell('A12').value = 'Account Manager Name*(First, Last Name):';
+    worksheet.getCell('B12').value = document.getElementById('accountManagerName').value;
+    worksheet.getCell('D12').value = 'Account Manager Phone:';
+    worksheet.getCell('E12').value = document.getElementById('accountManagerPhone').value;
+
+    // Bảng 3 - Remarks
+    
+    worksheet.mergeCells('A13:E13');
+    worksheet.getCell('A13').value = 'Remarks (Any comments/ details/ requirements/ project name / tender specifications and etc. For government bids, it\'s mandatory to indicate project name, procuring entity, project background/used case e.g. if one lot.)';
+    worksheet.mergeCells('A14:E14');
+    worksheet.getCell('A14').value = document.getElementById('remarks').value;
+
+    // Bảng 4 - Bill of Materials
+    worksheet.mergeCells('A15:E15');
+    worksheet.getCell('A15').value = 'Bill of Materials';
+    worksheet.mergeCells('A16:C16');
+    worksheet.getCell('A16').value = 'SKU/ Product/ Description.*';
+    worksheet.mergeCells('A17:C17');
+    worksheet.getCell('A17').value = document.getElementById('sku').value;
+    worksheet.getCell('D16').value = 'Qty*';
+    worksheet.getCell('D17').value = document.getElementById('quantity').value;
+    worksheet.getCell('E16').value = 'List Price USD';
+    worksheet.getCell('E17').value = document.getElementById('listPriceUSD').value;
+
+    worksheet.mergeCells('A18:C18');
+    worksheet.getCell('A18').value = document.getElementById('sku2').value;
+   
+    worksheet.getCell('D18').value = document.getElementById('quantity2').value;
+
+    worksheet.getCell('E18').value = document.getElementById('listPriceUSD2').value;
+
+    worksheet.mergeCells('A19:C19');
+    worksheet.getCell('A19').value = document.getElementById('sku3').value;
+   
+    worksheet.getCell('D19').value = document.getElementById('quantity3').value;
+
+    worksheet.getCell('E19').value = document.getElementById('listPriceUSD3').value;
+
+    //
+  
+    
+   
+
+    worksheet.eachRow({ includeEmpty: true }, function(row, rowNumber) {
+    row.eachCell({ includeEmpty: true }, function(cell, colNumber) {
+        cell.border = {
+            top: { style: 'medium' },
+            left: { style: 'medium' },
+            bottom: { style: 'medium' },
+            right: { style: 'medium' },
+        };
+    });
+});
+    const fillColor2 = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'DCDCDC' } 
+    };
+
+    
+    // List of cells to fill color
+    const cellsToFill = ['A2', 'A3', 'A4', 'A5', 'A6', 'A7', 'A8','A9','A11','A12','C2','C3','C4','C5','C6','C7','C8','C9','D11','D12'];
+
+    // Apply fill color to specific cells
+    cellsToFill.forEach(cell => {
+        worksheet.getCell(cell).fill = fillColor2;
+    });
+
+
+    const fillColor = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'FFFBE5D5' } // RGB(251,229,213) in ARGB format
+    };
+
+    
+    // List of cells to fill color
+    const cellsToFill2 = ['A1', 'A10', 'A13', 'A15', 'A16', 'D16', 'E16'];
+
+    // Apply fill color to specific cells
+    cellsToFill2.forEach(cell => {
+        worksheet.getCell(cell).fill = fillColor;
+    });
+    const cellsToWrapText = [
+    // Thêm danh sách các ô mà bạn muốn wrap text ở đây, ví dụ:
+    'B1', 'C1', 'D1', 'E1', // Để wrap text cho hàng 1 (ngoại trừ A1)
+    'A2', 'B2', 'C2', 'D2', 'E2',
+    'A3', 'B3', 'C3', 'D3', 'E3', // Ví dụ khác
+    'A4', 'B4', 'C4', 'D4', 'E4',
+    'A5', 'B5', 'C5', 'D5', 'E5',
+    'A6', 'B6', 'C6', 'D6', 'E6',
+    'A7', 'B7', 'C7', 'D7', 'E7',
+    'A8', 'B8', 'C8', 'D8', 'E8',
+    'A9', 'B9', 'C9', 'D9', 'E9',
+
+    'A11', 'B11', 'C11', 'D11', 'E11',
+    'A12', 'B12', 'C12', 'D12', 'E12',
+
+    'A14', 'B14', 'C14', 'D14', 'E14',
+
+    'A17', 'B17', 'C17', 'D17', 'E17',
+    'A18', 'B18', 'C18', 'D18', 'E18',
+    'A19', 'B19', 'C19', 'D19', 'E19',
+    // Tiếp tục thêm các ô khác tùy ý
+];
+const cellsToBold = ['A1', 'A2', 'B2', 'C2', 'A3', 'C3', 'A4', 'A6', 'A8', 'B3', 'A10', 'A11', 'B11', 'D11', 'A12', 'A13', 'A15', 'E17','E18','E19'];
+
+cellsToBold.forEach(cell => {
+    worksheet.getCell(cell).font = {
+        bold: true
+    };
+});
+
+const cellsToColor = ['A2', 'B2', 'C2', 'A3', 'C3', 'A4', 'A6', 'A8', 'E12'];
+
+// Màu xanh mực (Blue) trong ARGB format
+const blueColor = { argb: '000099' };
+
+// Đặt màu xanh mực cho các ô
+cellsToColor.forEach(cell => {
+    worksheet.getCell(cell).font = {
+        color: blueColor,
+        bold: true // Đặt đậm cùng lúc với màu xanh mực
+    };
+});
+
+// Lặp qua danh sách các ô và đặt thuộc tính wrapText cho chúng
+cellsToWrapText.forEach(cellAddress => {
+    worksheet.getCell(cellAddress).alignment = { wrapText: true };
+});
+const cellsToCenter = ['D17', 'E17', 'D18', 'E18', 'D19', 'E19'];
+
+// Đặt căn giữa cho các ô
+cellsToCenter.forEach(cell => {
+    worksheet.getCell(cell).alignment = {
+        vertical: 'middle',
+        horizontal: 'center'
+    };
+});
+const cellsToleft = ['A17', 'A18', 'A19'];
+
+// Đặt căn giữa cho các ô
+cellsToleft.forEach(cell => {
+    worksheet.getCell(cell).alignment = {
+        vertical: 'middle',
+        horizontal: 'left'
+    };
+});
+
+const cellsToTop = ['A4'];
+
+// Đặt căn giữa cho các ô
+cellsToTop.forEach(cell => {
+    worksheet.getCell(cell).alignment = {
+        vertical: 'top'
+    };
+});
+const cellsTopLeft = ['E11','E12','B11','B12','B1','B2','B3','B4','B5','B6','B7','B8','B9','A14','E1','E2','E3','E4','E5','E6','E7','E8','E9','C1','C2','C3','C4',
+'C5','C6','C7','C8','C9','A15','A16','E16','D16'];
+
+// Đặt căn giữa cho các ô
+cellsTopLeft.forEach(cell => {
+    worksheet.getCell(cell).alignment = {
+        vertical: 'top',
+        horizontal: 'left'
+    };
+});
+
+    // Tạo tệp Excel và tải về
+    workbook.xlsx.writeBuffer().then(function (data) {
+        var blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        saveAs(blob, 'Deal_Registration_Form.xlsx');
+    });
+}
+
+
+// Gán hàm exportToExcel cho sự kiện click của nút "Export to Excel"
+document.getElementById("exportToExcelButton").addEventListener("click", exportToExcel);
+
+    </script>
+</body>
+</html>
